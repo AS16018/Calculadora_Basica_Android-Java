@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         btnPunto = (Button) findViewById(R.id.btnPunto);
         btnRaiz = (Button) findViewById(R.id.btnRaiz);
         btnExp = (Button) findViewById(R.id.btnExp);
-        btnParentesis = (Button) findViewById(R.id.btnParentesis);
+        btnParentesis = (Button) findViewById(R.id.btnPorcentaje);
         texto = (TextView)findViewById(R.id.textView);
     }
 
@@ -184,9 +184,25 @@ public class MainActivity extends AppCompatActivity {
             result = numero1 - numero2;
             texto.setText(String.valueOf(result));
         }
+
+        if (operacion.equals("²")){
+            result = (float) Math.pow(numero1,2);
+            texto.setText(String.valueOf(result));
+        }
+
         if (operacion.equals("√")){
-            double resultRaiz = Math.sqrt(Double.valueOf(texto.getText().subSequence(1, texto.getText().length()).toString()));
-            texto.setText(String.valueOf(resultRaiz));
+            if (texto.getText().toString().contains("-")){
+                Toast.makeText(this, "NO SE ACEPTAN NUMEROS NEGATIVOS DENTRO DE RAIZ CUADRADA", Toast.LENGTH_LONG).show();
+            }else{
+                double resultRaiz = Math.sqrt(Double.valueOf(texto.getText().subSequence(1, texto.getText().length()).toString()));
+                texto.setText(String.valueOf(resultRaiz));
+            }
+
+
+        }
+        if (operacion.equals("%")){
+            result = numero1/100;
+            texto.setText(String.valueOf(result));
         }
 
     }
@@ -194,6 +210,10 @@ public class MainActivity extends AppCompatActivity {
     public void restar(View view) {
         if (texto.getText().toString().contains("√")){
             Toast.makeText(this, "NO SE ACEPTAN NUMEROS NEGATIVOS DENTRO DE RAIZ CUADRADA", Toast.LENGTH_LONG).show();
+        }else if(Float.valueOf(texto.getText().toString()) == 0.0){
+            operacion = "-";
+            texto.setText("-");
+            p = false;
         }else{
             numero1 = Float.valueOf(texto.getText().toString());
             operacion = "-";
@@ -225,18 +245,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void elevarCuadrado(View view) {
+
+        if(texto.getText().toString().contains("²")){
+            numero1 = Float.valueOf(texto.getText().subSequence(0, texto.getText().length()-1).toString());
+            texto.setText(String.valueOf(Math.pow(numero1,2)));
+        }else{
+            numero1 = Float.valueOf(texto.getText().toString());
+            operacion= "²";
+            texto.setText(String.valueOf(numero1)+"²");
+        }
+
     }
 
     public void raizCuadrada(View view) {
-        //numero1 = Float.valueOf(texto.getText().toString());
-        operacion = "√";
-        texto.setText("√");
-        p = false;
+        if (!texto.getText().equals("0") && !texto.getText().equals("0.0")){
+            texto.setText("√"+texto.getText());
+            operacion = "√";
+        }else{
+            operacion = "√";
+            texto.setText("√");
+            p = false;
+        }
+
     }
 
-    public void parentesis(View view) {
-    }
 
     public void borrarUnNum(View view) {
+        if (texto.getText().equals("") || texto.getText().length() ==1){
+            texto.setText("0");
+        }else {
+            texto.setText(texto.getText().subSequence(0, texto.getText().length() - 1));
+        }
+    }
+
+    public void porcentaje(View view) {
+        if (!texto.getText().equals("0") && !texto.getText().equals("0.0")){
+            numero1 = Float.valueOf(texto.getText().toString());
+            texto.setText(texto.getText()+"%");
+            operacion = "%";
+        }
     }
 }

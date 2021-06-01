@@ -423,7 +423,7 @@
         app:layout_constraintTop_toBottomOf="@id/guideline8" />
 
     <Button
-        android:id="@+id/btnParentesis"
+        android:id="@+id/btnPorcentaje"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="#FF221F1F"
@@ -432,8 +432,8 @@
         android:insetTop="0.5dp"
         android:insetRight="0.5dp"
         android:insetBottom="0.5dp"
-        android:onClick="parentesis"
-        android:text="()"
+        android:onClick="porcentaje"
+        android:text="%"
         android:textColor="#39FF14"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@id/guideline11"
